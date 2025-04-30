@@ -1,6 +1,7 @@
 package med.voll.api.paciente;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -29,14 +30,35 @@ public class Paciente {
 
     private String cpf;
 
+    private boolean ativo;
+
     @Embedded
     private Endereco endereco;
 
     public Paciente(DadosCadastroPaciente dados) {
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
         this.cpf = dados.cpf();
         this.endereco = new Endereco(dados.endereco());
+    }
+
+    public void atualizarInformacoes(DadosAtualizacaoPaciente dadosAtualizacaoPaciente) {
+        if (dadosAtualizacaoPaciente.nome() != null) {
+            this.nome = dadosAtualizacaoPaciente.nome();
+        }
+
+        if (dadosAtualizacaoPaciente.telefone() != null) {
+            this.telefone = dadosAtualizacaoPaciente.telefone();
+        }
+
+        if (dadosAtualizacaoPaciente.endereco() != null) {
+            this.endereco.atualizarInformacoes(dadosAtualizacaoPaciente.endereco());
+        }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }
