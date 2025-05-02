@@ -41,6 +41,12 @@ public class MedicoController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity listaMedico(@PathVariable(value = "id") Long id) {
+        var medico = medicoRepository.getReferenceById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new DadosDetalhamentoMedico(medico));
+    }
+
     //Retorno resposta 200 - ok com conteúdo
     @PutMapping
     @Transactional
