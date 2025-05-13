@@ -19,6 +19,10 @@ public class SecurityConfigurations {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(httpRequest -> {
+                    httpRequest.requestMatchers("/login").permitAll();
+                    httpRequest.anyRequest().authenticated();
+                })
                 .build();
     }
 
