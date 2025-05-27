@@ -1,5 +1,7 @@
 package med.voll.api.domain.consulta;
 
+import med.voll.api.domain.ValidacaoException;
+import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,32 @@ public class AgendaDeConsultas {
 
     public void agendar(DadosAgendamentoConsulta dadosAgendamentoConsulta) {
         // Regras de negócio
+        if (!pacienteRepository.existsById(dadosAgendamentoConsulta.idPaciente())) {
+            throw new ValidacaoException("Id do paciente não existe");
+        }
 
-        var medico = medicoRepository.findById(dadosAgendamentoConsulta.idMedico()).get();
-        var paciente = pacienteRepository.findById(dadosAgendamentoConsulta.idPaciente()).get();
+        if (dadosAgendamentoConsulta.idMedico() != null && !medicoRepository.existsById(dadosAgendamentoConsulta.idMedico())) {
+            throw new ValidacaoException("Id do médico não existe");
+        }
+
+        var medico = escolherMedico(dadosAgendamentoConsulta);
+        var paciente = pacienteRepository.getReferenceById(dadosAgendamentoConsulta.idPaciente());
         var consulta = new Consulta(null, medico, paciente, dadosAgendamentoConsulta.data());
         consultaRepository.save(consulta);
+    }
+
+    private Medico escolherMedico(DadosAgendamentoConsulta dadosAgendamentoConsulta) {
+        if (dadosAgendamentoConsulta.idMedico() != null) {
+            return medicoRepository.getReferenceById(dadosAgendamentoConsulta.idMedico());
+        }
+
+        if (dadosAgendamentoConsulta.especialidade() == null) {
+            throw new ValidacaoException("Especialidade é obrigatória quando médico não for escolhido");
+        }
+
+
+
+        return medicoRepository.escolherMedicoAleatorioLivreNaData(dadosAgendamentoConsulta.especialidade(), dadosAgendamentoConsulta.data());
     }
 
 }
