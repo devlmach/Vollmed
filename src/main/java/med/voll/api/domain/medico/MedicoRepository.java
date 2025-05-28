@@ -16,18 +16,28 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     Page<Medico> findAllByAtivoTrue(Pageable pageable);
 
     // Sintaxe JPQL
-    @Query(""" 
-            SELECT m.ativo,
-                   m.especialidade
-            FROM Medico m
-            WHERE m.ativo = true
-              and m.especialidade = :especialidade
-              and m.id not in (
-                SELECT c.medico.id FROM Consulta c
-                WHERE c.data = :data
+    @Query("""
+        select m from Medicos m
+              where
+              m.ativo = true
+              and
+              m.especialidade = :especialidade
+              and
+              m.id not in(
+                  select c.medico.id from Consultas c
+                  where
+                  c.data = :data
               )
-            ORDER BY random()
-            limit 1
-            """)
+              order by rand()
+              limit 1
+      """)
     Medico escolherMedicoAleatorioLivreNaData(Especialidade especialidade, @NotNull @Future LocalDateTime data);
+
+    @Query("""
+            SELECT m.ativo
+            FROM Medicos m 
+            WHERE
+            m.id = :id
+            """)
+    boolean findAtivoById(Long idMedico);
 }
