@@ -25,7 +25,7 @@ public class AgendaDeConsultas {
     @Autowired
     private List<ValidadorAgendamentoDeConsulta> validadorAgendamentoDeConsultas;
 
-    public void agendar(DadosAgendamentoConsulta dadosAgendamentoConsulta) {
+    public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dadosAgendamentoConsulta) {
         // Regras de negócio
         if (!pacienteRepository.existsById(dadosAgendamentoConsulta.idPaciente())) {
             throw new ValidacaoException("Id do paciente não existe");
@@ -38,9 +38,16 @@ public class AgendaDeConsultas {
         validadorAgendamentoDeConsultas.forEach( v -> v.validar(dadosAgendamentoConsulta));
 
         var medico = escolherMedico(dadosAgendamentoConsulta);
+
+        if (medico == null) {
+            throw new ValidacaoException("Não existe médico disponível nessa data");
+        }
+
         var paciente = pacienteRepository.getReferenceById(dadosAgendamentoConsulta.idPaciente());
         var consulta = new Consulta(null, medico, paciente, dadosAgendamentoConsulta.data(), null);
         consultaRepository.save(consulta);
+
+        return new DadosDetalhamentoConsulta(consulta);
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dadosAgendamentoConsulta) {
