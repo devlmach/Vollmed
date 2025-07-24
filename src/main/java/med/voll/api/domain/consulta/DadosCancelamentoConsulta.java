@@ -8,4 +8,9 @@ public record DadosCancelamentoConsulta(
 
         @NotNull
         MotivoCancelamento motivoCancelamento) {
+
+        public DadosCancelamentoConsulta(Consulta consulta) {
+                this(consulta.getId(),
+                        consulta.getMotivoCancelamento());
+        }
 }
