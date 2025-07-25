@@ -57,6 +57,7 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<!-- INCLUI JUnit, Mockito, Hamcrest, AssertJ - BICLIOTECAS DE TESTE-->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
