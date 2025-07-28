@@ -10,7 +10,7 @@ public record DadosDetalhamentoMedico(
         String telefone,
         Especialidade especialidade,
         Endereco endereco,
-        boolean ativo) {
+        Boolean ativo) {
 
     public DadosDetalhamentoMedico(Medico medico) {
         this(medico.getId(),
@@ -20,6 +20,6 @@ public record DadosDetalhamentoMedico(
                 medico.getTelefone(),
                 medico.getEspecialidade(),
                 medico.getEndereco(),
-                medico.isAtivo());
+                medico.getAtivo());
     }
 }

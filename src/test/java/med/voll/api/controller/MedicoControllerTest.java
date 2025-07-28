@@ -17,8 +17,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -76,7 +75,8 @@ class MedicoControllerTest {
                 dadosCadastro.telefone(),
                 dadosCadastro.especialidade(),
                 new Endereco(dadosCadastro.endereco()),
-                dadosCadastro.equals(anyBoolean()));
+                false
+        );
 
         var jsonEsperado = dadosDetalhamentoMedicoJacksonTester.write(dadosDetalhamento).getJson();
 
