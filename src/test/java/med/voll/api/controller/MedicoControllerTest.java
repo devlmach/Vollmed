@@ -76,8 +76,7 @@ class MedicoControllerTest {
                 dadosCadastro.telefone(),
                 dadosCadastro.especialidade(),
                 new Endereco(dadosCadastro.endereco()),
-                false
-        );
+                dadosCadastro.equals(anyBoolean()));
 
         var jsonEsperado = dadosDetalhamentoMedicoJacksonTester.write(dadosDetalhamento).getJson();
 
