@@ -1,6 +1,6 @@
 # Vollmed System
 
-O sistema do Vollmed é uma API Rest desenvolvida para o gerenciamento de uma clínica médica. Desenvolvida com **Spring Boot**, a APOI oferece funcionalidades essenciais para a administração da clínica.
+O sistema do Vollmed é uma API Rest desenvolvida para o gerenciamento de uma clínica médica. Desenvolvida com **Spring Boot**, a API oferece funcionalidades essenciais para a administração da clínica.
 
 <hr>
 
