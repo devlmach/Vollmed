@@ -23,7 +23,7 @@ O sistema do Vollmed é uma API Rest desenvolvida para o gerenciamento de uma cl
 - Geração automática de dados fictícios para testes unitários para validação dos Endpoints e das regras de negócios.
 <hr>
 
-🛠️**Ferramentas Utilizadas**
+## 🛠️Ferramentas Utilizadas
 
 - Java 21
 - Spring Boot
@@ -34,7 +34,7 @@ O sistema do Vollmed é uma API Rest desenvolvida para o gerenciamento de uma cl
 - PostgreSQL
 - Swagger (para documentação)
 
-▶️**Como executar**
+## ▶️Como executar
 
 1. Clone o repositório:
 
